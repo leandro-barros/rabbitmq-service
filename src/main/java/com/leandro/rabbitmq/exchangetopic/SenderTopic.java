@@ -11,6 +11,8 @@ public class SenderTopic {
 
     private static final String ROUTING_KEY_TOPIC = "quick.orange.rabbit";
 
+    private static final String ROUTING_KEY_TOPIC_TWO = "quick.rabbit";
+
     public static void main(String[] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
 
@@ -22,9 +24,11 @@ public class SenderTopic {
 
             channel.exchangeDeclare(NAME_EXCHANGE, BuiltinExchangeType.TOPIC);
 
-            String message = "Message published in the type Topic";
-
+            String message = "Message published in the type Topic with option (*): ";
             channel.basicPublish(NAME_EXCHANGE, ROUTING_KEY_TOPIC, null, message.getBytes());
+
+            String messageTwo = "Message published in the type Topic with option (#): ";
+            channel.basicPublish(NAME_EXCHANGE, ROUTING_KEY_TOPIC_TWO, null, messageTwo.getBytes());
 
         }
 
