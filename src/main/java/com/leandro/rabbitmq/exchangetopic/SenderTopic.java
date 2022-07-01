@@ -11,12 +11,10 @@ public class SenderTopic {
 
     private static final String ROUTING_KEY_TOPIC = "quick.orange.rabbit";
 
-    private static final String SECOND_ROUTING_KEY = "secondRoutingKeyTest";
-
     public static void main(String[] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
 
-        factory.setUri("amqps://rmlkqywa:UCjDND1gVH5rRZGIjVvtvaxv5BwhZwsY@beaver.rmq.cloudamqp.com/rmlkqywa");
+        factory.setUri("amqps://rmlkqywa:UCjDND1gVH5rRZGIjVvtvaxv35BwhZwsY@beaver.rmq.cloudamqp.com/rmlkqywa");
 
         try(Connection connection = factory.newConnection()) {
 
