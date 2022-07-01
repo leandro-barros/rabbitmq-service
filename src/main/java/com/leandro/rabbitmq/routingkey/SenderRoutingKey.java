@@ -10,6 +10,8 @@ public class SenderRoutingKey {
 
     private static final String ROUTING_KEY = "routingKeyTest";
 
+    private static final String SECOND_ROUTING_KEY = "secondRoutingKeyTest";
+
     public static void main(String[] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
 
@@ -21,9 +23,13 @@ public class SenderRoutingKey {
 
             channel.exchangeDeclare(NAME_EXCHANGE, "direct");
 
-            String message = "Hello this is a pub message type direct";
+            String message = "Message published in the type direct";
+
+            String message2 = "Message second with others Routing Key";
 
             channel.basicPublish(NAME_EXCHANGE, ROUTING_KEY, null, message.getBytes());
+
+            channel.basicPublish(NAME_EXCHANGE, SECOND_ROUTING_KEY, null, message2.getBytes());
         }
 
     }
