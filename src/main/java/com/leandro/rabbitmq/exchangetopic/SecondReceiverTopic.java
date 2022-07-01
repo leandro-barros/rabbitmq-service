@@ -9,6 +9,7 @@ public class SecondReceiverTopic {
 
     private static final String NAME_EXCHANGE = "topicExchange";
 
+    // Caso coloque somente # todos as mesagens irá cair na fila e funcionará como, por exemplo, a fanout
     private static final String NAME_BINDKEY = "#.rabbit";
 
     private static final String NAME_QUEUE = "queue_topic_two";
