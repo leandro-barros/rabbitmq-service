@@ -26,7 +26,7 @@ public class ReceiverTopic {
 
         DeliverCallback deliverCallback = (ConsumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
-            System.out.println("[**] Received message Exchange Topic: " + message);
+            System.out.println("[**] Received message Exchange Topic with option (*): " + message);
 
         };
 
