@@ -5,7 +5,9 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
-public class ReceiverPubSub {
+public class SecondReceiverPubSub {
+
+    private static final String NAME_QUEUE = "fanout-broadcast";
 
     private static final String NAME_EXCHANGE = "fanoutExchange";
 
@@ -17,12 +19,11 @@ public class ReceiverPubSub {
 
         Channel channel = connection.createChannel();
 
-        // Irá criar uma fila aleatório.
-        String nameQueue = channel.queueDeclare().getQueue();
+        channel.queueDeclare(NAME_QUEUE, false, false, false, null);
 
         channel.exchangeDeclare(NAME_EXCHANGE, "fanout");
 
-        channel.queueBind(nameQueue, NAME_EXCHANGE, "");
+        channel.queueBind(NAME_QUEUE, NAME_EXCHANGE, "");
 
         DeliverCallback deliverCallback = (ConsumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
@@ -31,7 +32,7 @@ public class ReceiverPubSub {
         };
 
         boolean autoack = true;
-        channel.basicConsume(nameQueue, autoack, deliverCallback, ConsumerTag -> {});
+        channel.basicConsume(NAME_QUEUE, autoack, deliverCallback, ConsumerTag -> {});
     }
 
 }
