@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Vector;
 
 @Slf4j
-public class ProducerPublishConfirmation {
+public class ProducerSecondPublishConfirmation {
 
     private static final String NAME_EXCHANGE = "topicExchange";
 
@@ -27,28 +27,19 @@ public class ProducerPublishConfirmation {
 
             channel.exchangeDeclare(NAME_EXCHANGE, BuiltinExchangeType.TOPIC);
 
-            String message =  "This is my ";
-            int setOfMessages = 10;
-            int outMessages = 0;
+            Vector<String> vector = new Vector<>(3);
+            vector.add("Message 1");
+            vector.add("Message 2");
+            vector.add("Message 3");
 
+            for (int i = 0; i < 3; i++) {
+                String body = vector.get(i);
+                channel.basicPublish(NAME_EXCHANGE, ROUTING_KEY_TOPIC, null, body.getBytes());
+                log.info("[*] Sending the message: {}", body);
 
-            for (int i = 0; i < setOfMessages; i++) {
-                String bodyMessage = message + i;
-                channel.basicPublish(NAME_EXCHANGE, ROUTING_KEY_TOPIC, null, bodyMessage.getBytes());
-                log.info("[*] Sending the message: {}", bodyMessage);
-
-                outMessages++;
-
-                if (setOfMessages == outMessages) {
-                    channel.waitForConfirmsOrDie(5000);
-                    log.info("* Message confirmed");
-                    outMessages = 0;
-                }
-            }
-
-            if (outMessages != 0) {
                 channel.waitForConfirmsOrDie(5000);
-                log.info("* Second Message confirmed");
+
+                log.info("* Message confirmed");
             }
 
             log.info("Done");
