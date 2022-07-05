@@ -23,26 +23,27 @@ public class DLXConfig {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setUri(URI_AMQP);
 
-        try(Connection connection = factory.newConnection()) {
+        Connection connection = factory.newConnection();
 
-            Channel channel = connection.createChannel();
+        Channel channel = connection.createChannel();
 
-            channel.exchangeDeclare(NAME_EXCHANGE_DLX, BuiltinExchangeType.TOPIC);
-            channel.exchangeDeclare(NAME_EXCHANGE, BuiltinExchangeType.TOPIC);
+        channel.exchangeDeclare(NAME_EXCHANGE_DLX, BuiltinExchangeType.TOPIC);
+        channel.exchangeDeclare(NAME_EXCHANGE, BuiltinExchangeType.TOPIC);
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("x-message-ttl", 10000);
-            map.put("x-dead-letter-exchange", NAME_EXCHANGE_DLX);
-            map.put("x-dead-letter-routing-key", ROUTING_KEY_DLX);
+        Map<String, Object> map = new HashMap<>();
+        map.put("x-message-ttl", 10000);
+        map.put("x-dead-letter-exchange", NAME_EXCHANGE_DLX);
+        map.put("x-dead-letter-routing-key", ROUTING_KEY_DLX);
 
-            channel.queueDeclare(NAME_QUEUE_DLX, false, false, false, null);
-            channel.queueDeclare(NAME_QUEUE, false, false, false, map);
+        channel.queueDeclare(NAME_QUEUE_DLX, false, false, false, null);
+        channel.queueDeclare(NAME_QUEUE, false, false, false, map);
 
-            channel.queueBind(NAME_QUEUE_DLX, NAME_EXCHANGE_DLX, ROUTING_KEY_DLX + ".#");
-            channel.queueBind(NAME_QUEUE, NAME_EXCHANGE, ROUTING_KEY + ".#");
+        channel.queueBind(NAME_QUEUE_DLX, NAME_EXCHANGE_DLX, ROUTING_KEY_DLX + ".#");
+        channel.queueBind(NAME_QUEUE, NAME_EXCHANGE, ROUTING_KEY + ".#");
 
-            log.info("Done");
-        }
+        connection.close();
+
+        log.info("Done");
 
     }
 }
