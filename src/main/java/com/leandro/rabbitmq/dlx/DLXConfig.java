@@ -17,7 +17,7 @@ public class DLXConfig {
     private static final String NAME_QUEUE = "queue_topic_not_dlx";
     private static final String ROUTING_KEY = "key.not.dlx";
 
-    private static final String URI_AMQP = "amqps://rmlkqywa:UCjDND1gVH35rRZGIjVvtvaxv5BwhZwsY@beaver.rmq.cloudamqp.com/rmlkqywa";
+    private static final String URI_AMQP = "${URI_AMQP}";
 
     public static void main(String[] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();

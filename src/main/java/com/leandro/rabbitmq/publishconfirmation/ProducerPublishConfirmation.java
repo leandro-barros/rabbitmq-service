@@ -3,8 +3,6 @@ package com.leandro.rabbitmq.publishconfirmation;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Vector;
-
 @Slf4j
 public class ProducerPublishConfirmation {
 
@@ -12,7 +10,7 @@ public class ProducerPublishConfirmation {
 
     private static final String ROUTING_KEY_TOPIC = "quick.orange.rabbit";
 
-    private static final String URI_AMQP = "amqps://rmlkqywa:UCjDND1gVH5rRZGIjVvtvaxv35BwhZwsY@beaver.rmq.cloudamqp.com/rmlkqywa";
+    private static final String URI_AMQP = "${URI_AMQP}";
 
     public static void main(String[] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
